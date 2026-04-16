@@ -23,3 +23,4 @@ class deployment_checks extends Model
     {
         return $this->belongsTo(projects::class);
     }
+}
