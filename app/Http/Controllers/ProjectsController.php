@@ -35,7 +35,15 @@ class ProjectsController extends Controller
      */
     public function show(string $id)
     {
-        $project = projects::findOrFail($id);
+        $project = projects::with(['deployment_checks' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->withCount([
+            'deployment_checks',
+            'deployment_checks as completed_checks' => function ($query) {
+                $query->where('is_completed', true);
+            }
+        ])->findOrFail($id);
+
         return response()->json($project);
     }
 
@@ -52,11 +60,4 @@ class ProjectsController extends Controller
             return response()->json($project);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

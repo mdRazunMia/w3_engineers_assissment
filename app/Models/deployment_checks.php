@@ -18,4 +18,8 @@ class deployment_checks extends Model
         'is_completed',
         'completed_at',
     ];
-}
+
+    public function project()
+    {
+        return $this->belongsTo(projects::class);
+    }

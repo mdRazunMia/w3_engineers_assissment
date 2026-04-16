@@ -18,4 +18,8 @@ class projects extends Model
         'owner_email',
         'release_date',
     ];
-}
+
+    public function deployment_checks()
+    {
+        return $this->hasMany(deployment_checks::class);
+    }
